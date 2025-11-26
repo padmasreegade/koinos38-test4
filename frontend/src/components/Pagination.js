@@ -65,7 +65,7 @@ const Pagination = ({pagination, onPageChange, disabled = false}) => {
                 aria-label={"Previous Page"}
                 className="pagination-button"
             >
-                Previous
+                ← Previous
             </button>
 
             {/* Page Numbers*/}
@@ -87,7 +87,7 @@ const Pagination = ({pagination, onPageChange, disabled = false}) => {
                 aria-label="Next Page"
                 className="pagination-btn"
             >
-                Next
+                Next ⟶
             </button>
         </nav>
     </div>);
