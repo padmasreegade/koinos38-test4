@@ -15,7 +15,7 @@ function ItemDetail() {
             setLoading(true);
             setError(null);
 
-            const response = await fetch(`http://localhost:3001/api/item/${id}`);
+            const response = await fetch(`http://localhost:3001/api/items/${id}`);
 
             if (!response.ok) {
                 if (response.status === 404) throw new Error('Item not found');

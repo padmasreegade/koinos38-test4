@@ -332,7 +332,7 @@ body {
 .items-page {
     max-width: var(--max-width-md);
     margin: 0 auto;
-    padding: var(--max-width-md);
+    padding: var(--spacing-xl);
     font-family: var(--font-family-system);
 }
 
@@ -790,7 +790,7 @@ body {
 }
 
 .empty-title {
-    font-size: var(--text-lg);
+    font-size: 25px;
     font-weight: 600;
     color: var(--color-gray-700);
     margin-bottom: var(--spacing-sm);
@@ -798,7 +798,7 @@ body {
 }
 
 .empty-message {
-    font-size: var(--text-lg);
+    font-size: 20px;
     color: var(--color-gray-500);
     margin: 0;
 }

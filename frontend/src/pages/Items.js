@@ -117,7 +117,7 @@ function Items() {
             />
             <div className='empty-state'>
                 <div className='empty-icon'>
-                    <h3 className='empty-title'>No items found</h3>
+                    <h4 className='empty-title'>No items found</h4>
                     <p className='empty-message'>Try adjusting your search criteria or check back later.</p>
                 </div>
             </div>
