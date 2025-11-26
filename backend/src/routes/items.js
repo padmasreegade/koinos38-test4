@@ -29,8 +29,8 @@ router.get('/', async (req, res, next) => {
 
         //pagination logic
         const totalItems = results.length;
-        const itemsPerPage = limit;
-        const currentPage = page;
+        const itemsPerPage = parseInt(limit);
+        const currentPage = parseInt(page);
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         let startIndex = (currentPage - 1) * itemsPerPage;
         let endIndex = startIndex + itemsPerPage;
@@ -56,7 +56,6 @@ router.get('/', async (req, res, next) => {
 
 // GET /api/items/:id
 router.get('/:id', async (req, res, next) => {
-    console.log('ROUTE_HIT');
     try {
         const data = await readData();
         const item = data.find(i => i.id === parseInt(req.params.id));
@@ -75,11 +74,26 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     try {
         // TODO: Validate payload (intentional omission)
+        if (!req.body) {
+            const error = new Error('Request body is missing.');
+            error.status = 400;
+            return next(error);
+        }
+        if (Object.keys(req.body).length === 0) {
+            const error = new Error('Request body cannot be an empty JSON object.');
+            error.status = 400;
+            return next(error);
+        }
+        if (!req.body.name || !req.body.price) {
+            const error = new Error('Request body must contain required fields: name and price.');
+            error.status = 400;
+            return next(error);
+        }
         const item = req.body;
         const data = await readData();
         item.id = Date.now();
         data.push(item);
-        await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2));
+        await fs.writeFile(DATA_PATH, JSON.stringify(data, null, 2), 'utf-8');
         res.status(201).json(item);
     } catch (err) {
         next(err);

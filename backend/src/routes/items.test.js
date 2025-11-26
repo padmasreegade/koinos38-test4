@@ -3,17 +3,16 @@ const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
 const itemsRouter = require('./items');
-const {response} = require("express");
 
 // Test app
 const app = express();
-app.use(express.json);
+app.use(express.json());
 app.use('/api/items', itemsRouter);
 
 // error handling
 app.use((err, req, res, next) => {
     res.status(err.status || 500).json({
-        message: err.statusMessage || 'Internal Server Error', error: err.stack
+        message: err.message || 'Internal Server Error', error: err.stack
     });
 });
 
@@ -102,7 +101,7 @@ describe('Items Routes', () => {
 
         it('should return empty result on search query mismatch', async () => {
             const response = await request(app)
-                .get('/api/items?q=cha&limit=1')
+                .get('/api/items?q=abc&limit=1')
                 .expect(200);
 
             expect(response.body.items).toHaveLength(0);
@@ -206,7 +205,7 @@ describe('Items Routes', () => {
                 name: 'Tablet', category: 'Electronics', price: 399
             };
             const newItem2 = {
-                name: 'Tablet', category: 'Electronics', price: 399
+                name: 'Earphones', category: 'Electronics', price: 199
             };
 
             const response1 = await request(app)
@@ -221,7 +220,7 @@ describe('Items Routes', () => {
                 .send(newItem2)
                 .expect(201);
 
-            expect(response1.body.id).not(response2.body.id);
+            expect(response1.body.id).not.toBe(response2.body.id);
         });
         it('should handle empty request body', async () => {
             const response = await request(app)
@@ -244,7 +243,7 @@ describe('Items Routes', () => {
             const initialResponse = await request(app)
                 .get('/api/items')
                 .expect(200);
-
+            const initialCount = initialResponse.body.items.length;
             // Create a new item.
             const newItem = {name: 'Tony Stark', category: 'superhero', price: 3000};
             const createResponse = await request(app)
@@ -257,7 +256,7 @@ describe('Items Routes', () => {
             const postCreateResponse = await request(app)
                 .get('/api/items')
                 .expect(200);
-            expect(postCreateResponse.length).toBe(initialResponse.length + 1);
+            expect(postCreateResponse.body.items.length).toBe(initialCount + 1);
 
             // Verify the new item is retrievable.
             const getItemResponse = await request(app)
@@ -265,8 +264,8 @@ describe('Items Routes', () => {
                 .expect(200);
 
             expect(getItemResponse.body.name).toBe(newItem.name);
-            expect(response.body.category).toBe(newItem.category);
-            expect(response.body.price).toBe(newItem.price);
+            expect(getItemResponse.body.category).toBe(newItem.category);
+            expect(getItemResponse.body.price).toBe(newItem.price);
         });
     });
 });
