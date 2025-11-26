@@ -24,7 +24,7 @@ class ErrorBoundary extends React.Component {
                 <ErrorFallBack
                     error={this.state.error}
                     errorInfo={this.this.state.errorInfo}
-                    onRetry={() => this.setState({hasError: false, error, null, errorInfo: null})}
+                    onRetry={() => this.setState({hasError: false, error: null, errorInfo: null})}
                 />
             );
         }

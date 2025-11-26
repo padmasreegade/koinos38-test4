@@ -13,14 +13,14 @@ const SimpleList = ({items}) => {
         Display</div>);
 
 // Validate each item.
-    const validItems = items.filter(item => item && typeof item === 'object' && item.hasOwnProperty('id') && item.hasOwnProperty('name') && item.hasOwnProperty('category') && item.hasOwnProperty('price'));
+    const validItems = items.filter(item => item && typeof item === 'object' && item.hasOwnProperty('id') && item.hasOwnProperty('name'));
 
     if (validItems.length === 0) return (<div className='empty-list-message'>No valid items to display</div>);
 
     return (<div className='simple-items-list' role='list' aria-label='Items list'>
-        {validItems.map((item, index) => {
-            <SimpleItemRow key={item.id || index} item={item}/>
-        })}
+        {validItems.map((item, index) => (
+            <SimpleItemRow key={item.id || index} item={item} />
+        ))}
     </div>);
 };
 
@@ -33,7 +33,7 @@ const SimpleItemRow = ({item}) => {
     return (<div className='item-row' role='listitem'>
         <Link to={`/items/${item.id || ''}`}
               className='item-link'
-              aria-label={`View deails for ${item.name || 'Unknown item'}`}
+              aria-label={`View details for ${item.name || 'Unknown item'}`}
         >
             {item.name || 'Unknown item'}
         </Link>
@@ -67,14 +67,14 @@ function Items() {
             .catch(error => {
                 console.error('Fetch error:', error);
                 hasFetchedRef.current = false;
-            })
+            });
     }, [fetchItems]);
 
     const handleSearch = useCallback((query) => {
         searchItems(query);
     }, [searchItems]);
 
-    const handlePageChange = useCallback((query) => {
+    const handlePageChange = useCallback((page) => {
         loadPage(page);
     }, [loadPage]);
 
@@ -86,7 +86,12 @@ function Items() {
     // Loading state
     if (loading && !hasInitialLoad) {
         return (<div className='items-page'>
-            <div className='item-frame'/>
+            <div style={{
+            marginBottom: '20px',
+                height: '48px',
+                backgroundColor: '#f7fafc',
+                borderRadius: '8px'
+            }} />
             <LoadingSkeleton count={6}/>
         </div>);
     }

@@ -19,7 +19,7 @@ function ItemDetail() {
 
             if (!response.ok) {
                 if (response.status === 404) throw new Error('Item not found');
-                throw new Error(`HHTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
             setItem(data);
