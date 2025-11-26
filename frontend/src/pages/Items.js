@@ -18,7 +18,7 @@ const SimpleList = ({items}) => {
     if (validItems.length === 0) return (<div className='empty-list-message'>No valid items to display</div>);
 
     return (<div className='simple-items-list' role='list' aria-label='Items list'>
-        {validItems.map((items, index) => {
+        {validItems.map((item, index) => {
             <SimpleItemRow key={item.id || index} item={item}/>
         })}
     </div>);

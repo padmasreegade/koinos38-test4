@@ -5,7 +5,7 @@ const Pagination = ({pagination, onPageChange, disabled = false}) => {
     if (!pagination || typeof pagination !== 'object' || pagination.totalPages <= 1) return null;
 
     const defaultPagination = {
-        currentPage: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false, totalItems: 0, itemsPerPage: 10
+        currentPage = 1, totalPages = 1, hasNextPage = false, hasPrevPage = false, totalItems = 0, itemsPerPage = 10
     } = pagination || {};
 
     const handlePrevious = () => {

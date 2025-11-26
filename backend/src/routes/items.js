@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
             results = results.filter(item =>
                 item.name.toLowerCase().includes(searchTerm) ||
                 item.category.toLowerCase().includes(searchTerm) ||
-                item.price.toLowerCase().includes(searchTerm)
+                item.price.toString().includes(searchTerm)
             );
         }
 
